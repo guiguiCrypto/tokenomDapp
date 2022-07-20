@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
+import { Card, CardContent } from '@mui/material';
+import tokenom1 from '../images/Tokenom1.png'
+
 
 
 export class TokenomSlot extends Component {
@@ -58,10 +61,15 @@ export class TokenomSlot extends Component {
                     (this.state.tokenomId != null)
                         ?
                         (<>
-                            <h1>name : {this.state.name}</h1>
-                            <p>level : {this.state.level}</p>
-                            <p>LifePoint : {this.state.maxLifePoint}</p>
-                            <image uri={this.state.uri}></image>
+                            <img className='tokenomImage' src={tokenom1}></img>
+                            {/*<image uri={this.state.uri}></image> */}
+                            <div>
+                                <h1>name : {this.state.name}</h1>
+                                <p>level : {this.state.level}</p>
+                                <p>LifePoint : {this.state.maxLifePoint}</p>
+
+                            </div>
+
                         </>)
                         :
                         (<>
@@ -70,6 +78,7 @@ export class TokenomSlot extends Component {
 
                 }
             </div>
+
         );
     }
 

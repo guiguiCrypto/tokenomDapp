@@ -2,3 +2,38 @@
   height: 50px;
   width: 50px;
 }
+
+.tokenomSlot {
+  margin: 2%;
+}
+
+.invisibleButton {
+  background: transparent;
+  border: none !important;
+  cursor:pointer;
+
+}
+
+.tokenomImage {
+  height: 25%;
+  width: 25%;
+  float:left;
+}
+
+.selected {
+  background-color: #98fb98;
+}
+
+.layout {
+  height: 100vh;
+
+  display: grid;
+  grid-template-rows: 0.5fr 4fr 2fr;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.refreshButton {
+  float: right;
+  margin: 3%;
+}

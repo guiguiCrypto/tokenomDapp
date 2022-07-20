@@ -3,6 +3,7 @@ import { Header } from './Header.jsx'
 import { Grid, Stack } from '@mui/material';
 import { MintButton } from '../MintButton.jsx';
 import { TokenomTeam } from '../TokenomTeam.jsx';
+import { FindOpponent } from '../FindOpponent.jsx';
 
 
 export class MainPage extends Component {
@@ -27,7 +28,7 @@ export class MainPage extends Component {
 
                     <TokenomTeam></TokenomTeam>
                     <Grid item xs={8}>
-                        
+                        <FindOpponent></FindOpponent>
                     </Grid>
                 </Grid>
             </body>
