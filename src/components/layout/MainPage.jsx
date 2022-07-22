@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Header } from './Header.jsx'
-import { Grid, Stack } from '@mui/material';
-import { MintButton } from '../MintButton.jsx';
+import { Grid } from '@mui/material';
 import { TokenomTeam } from '../TokenomTeam.jsx';
-import { FindOpponent } from '../FindOpponent.jsx';
+import { FindOpponent } from './FindOpponent.jsx';
 
 
 export class MainPage extends Component {

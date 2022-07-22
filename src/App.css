@@ -20,10 +20,13 @@
   float:left;
 }
 
-.selected {
+.selectedAlly {
   background-color: #98fb98;
 }
 
+.selectedEnnemy{
+  background-color: #ffcccb;
+}
 .layout {
   height: 100vh;
 
@@ -36,4 +39,9 @@
 .refreshButton {
   float: right;
   margin: 3%;
+}
+
+.BattleButton {
+  width: 100%;
+  height: 50%;
 }

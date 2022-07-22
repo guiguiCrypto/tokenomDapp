@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import * as Constants from './Constants.jsx';
-import { ethers, BigNumber } from 'ethers';
+import { ethers } from 'ethers';
 import { Grid, Stack } from '@mui/material';
 import { TokenomSlot } from './TokenomSlot.jsx';
 import { MintButton } from './MintButton.jsx';
 import { Card, CardContent } from '@mui/material';
 import "../App.css";
-
+import BattleDataContext from './BattleDataContext.jsx';
 
 
 export class TokenomTeam extends Component {
+
+    static contextType = BattleDataContext
+
 
     constructor() {
         super();
@@ -40,7 +43,6 @@ export class TokenomTeam extends Component {
                 for (let i = 0; i < tokenomIds.length; i++) {
                     normalTokenomIds[i] = normalTokenomIds[i].toNumber();
                 }
-                console.log(normalTokenomIds);
 
                 this.setState({
                     ids: normalTokenomIds,
@@ -56,8 +58,12 @@ export class TokenomTeam extends Component {
     }
 
     selectTokenomHandler = async (id) => {
-        if (id === this.state.activeTokenom){
+        const { setSelectedAlly } = this.context
+
+        setSelectedAlly(this.state.ids[id]);
+        if (id === this.state.activeTokenom) {
             id = null;
+            setSelectedAlly(null);
         }
 
         this.setState({
@@ -66,16 +72,20 @@ export class TokenomTeam extends Component {
     }
 
     render() {
+
+
+
         return (
             <Grid item xs={4}>
                 <Stack spacing={2}>
+                    <h2>Select your Tokenom</h2>
                     {
                         (this.state.ids[0] != null)
                             ?
                             (<>
                                 <button className='invisibleButton' onClick={() => this.selectTokenomHandler(0)} >
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom == 0 ? "10px 5px 5px black" : ""}}>
-                                        <CardContent className={this.state.activeTokenom == 0 ? "selected" : ""} style={{ flexGrow: "1" }}>
+                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 0 ? "10px 5px 5px black" : "" }}>
+                                        <CardContent className={this.state.activeTokenom === 0 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
                                             <TokenomSlot tokenomId={this.state.ids[0]} ></TokenomSlot>
                                         </CardContent>
                                     </Card>
@@ -83,8 +93,14 @@ export class TokenomTeam extends Component {
                             </>)
                             :
                             (<>
-                                <h3>this slot is empty, you can mint a new tokenom</h3>
-                                <MintButton></MintButton>
+                                <div>
+                                    <Card className="tokenomSlot" >
+                                        <CardContent>
+                                            <h3>this slot is empty, you can mint a new tokenom</h3>
+                                            <MintButton></MintButton>
+                                        </CardContent>
+                                    </Card>
+                                </div>
                             </>)
                     }
                     {
@@ -92,8 +108,8 @@ export class TokenomTeam extends Component {
                             ?
                             (<>
                                 <button className='invisibleButton' onClick={() => this.selectTokenomHandler(1)}>
-                                <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom == 1 ? "10px 5px 5px black" : ""}}>
-                                        <CardContent className={this.state.activeTokenom == 1 ? "selected" : ""} style={{ flexGrow: "1" }}>
+                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 1 ? "10px 5px 5px black" : "" }}>
+                                        <CardContent className={this.state.activeTokenom === 1 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
                                             <TokenomSlot tokenomId={this.state.ids[1]} ></TokenomSlot>
                                         </CardContent>
                                     </Card>
@@ -117,8 +133,8 @@ export class TokenomTeam extends Component {
                             ?
                             (<>
                                 <button className='invisibleButton' onClick={() => this.selectTokenomHandler(2)}>
-                                <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom == 2 ? "10px 5px 5px black" : ""}}>
-                                        <CardContent className={this.state.activeTokenom == 2 ? "selected" : ""} style={{ flexGrow: "1" }}>
+                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 2 ? "10px 5px 5px black" : "" }}>
+                                        <CardContent className={this.state.activeTokenom === 2 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
                                             <TokenomSlot tokenomId={this.state.ids[2]} ></TokenomSlot>
                                         </CardContent>
                                     </Card>
@@ -142,8 +158,8 @@ export class TokenomTeam extends Component {
                             ?
                             (<>
                                 <button className='invisibleButton' onClick={() => this.selectTokenomHandler(3)}>
-                                <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom == 3 ? "10px 5px 5px black" : ""}}>
-                                        <CardContent className={this.state.activeTokenom == 3 ? "selected" : ""} style={{ flexGrow: "1" }}>
+                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 3 ? "10px 5px 5px black" : "" }}>
+                                        <CardContent className={this.state.activeTokenom === 3 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
                                             <TokenomSlot tokenomId={this.state.ids[3]} ></TokenomSlot>
                                         </CardContent>
                                     </Card>
@@ -167,8 +183,8 @@ export class TokenomTeam extends Component {
                             ?
                             (<>
                                 <button className='invisibleButton' onClick={() => this.selectTokenomHandler(4)}>
-                                <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom == 4 ? "10px 5px 5px black" : ""}}>
-                                        <CardContent className={this.state.activeTokenom == 4 ? "selected" : ""} style={{ flexGrow: "1" }}>
+                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 4 ? "10px 5px 5px black" : "" }}>
+                                        <CardContent className={this.state.activeTokenom === 4 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
                                             <TokenomSlot tokenomId={this.state.ids[4]} ></TokenomSlot>
                                         </CardContent>
                                     </Card>
@@ -193,8 +209,8 @@ export class TokenomTeam extends Component {
                             ?
                             (<>
                                 <button className='invisibleButton' onClick={() => this.selectTokenomHandler(5)}>
-                                <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom == 5 ? "10px 5px 5px black" : ""}}>
-                                        <CardContent className={this.state.activeTokenom == 5 ? "selected" : ""} style={{ flexGrow: "1" }}>
+                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 5 ? "10px 5px 5px black" : "" }}>
+                                        <CardContent className={this.state.activeTokenom === 5 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
                                             <TokenomSlot tokenomId={this.state.ids[5]} ></TokenomSlot>
                                         </CardContent>
                                     </Card>

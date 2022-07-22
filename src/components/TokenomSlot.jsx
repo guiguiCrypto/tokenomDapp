@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
-import { Card, CardContent } from '@mui/material';
 import tokenom1 from '../images/Tokenom1.png'
 
 
@@ -34,7 +33,6 @@ export class TokenomSlot extends Component {
                 const signer = provider.getSigner();
                 const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
 
-                console.log(this.state.tokenomId)
                 let tokenom = await tokenContract.pokemonStats(this.state.tokenomId);
                 let tokenomURI = await tokenContract.tokenURI(this.state.tokenomId)
 

@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MainPage } from './components/layout/MainPage';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
+import { BattleDataProvider } from "./components/BattleDataContext";
 
 
 function App() {
 
-
+  const battleData = {
+    selectedAlly: null,
+    selectedEnnemy: null,
+  }
 
   return (
-    <Router>
-      <Routes>
-        <Route exact path='/' element={< MainPage />}></Route>
-        <Route exact path='/MainPage' element={< MainPage />}></Route>
-      </Routes>
-
-
-    </Router>
+    <BattleDataProvider value={battleData}>
+      <Router>
+        <Routes>
+          <Route exact path='/' element={< MainPage />}></Route>
+          <Route exact path='/MainPage' element={< MainPage />}></Route>
+        </Routes>
+      </Router>
+    </BattleDataProvider>
   );
 }
 
