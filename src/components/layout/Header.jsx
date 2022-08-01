@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import logo from '../../images/logo.png';
 import "../../App.css";
 
-export class Header extends Component { 
+export class Header extends Component {
 
     constructor(props) {
         super(props);
@@ -67,24 +67,23 @@ export class Header extends Component {
 
     render() {
         return (
-            <div>
-                <Box sx={{ flexGrow: 1}} style={{maxHeight: "20%"}}>
-                    <AppBar position="static" color='primary' sx={{opacity:0.75}}>
-                        <Toolbar>
-                            <Typography align="left" variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                <img className='logo' src={logo} alt="Logo" />
-                            </Typography>
+            <div className='h-full bg-blue-500 flex justify-between'>
+                <img className='logo my-auto ml-5' src={logo} alt="Logo" />
 
-                            <span className="badge bg-secondary">
-                                {this.state.currentAccount}
-                            </span>
-                            
-                            <button onClick={this.connectWalletHandler} className='cta-button mint-nft-button'>
-                                Connect Wallet
-                            </button>
-                        </Toolbar>
-                    </AppBar>
-                </Box>
+                {(this.state.currentAccount == null)
+
+                    ?
+                    <>
+                        <button onClick={this.connectWalletHandler} className='rounded-lg bg-white hover:bg-orange-700 border-double border-2 border-indigo-600 my-auto mr-10 h-2/4'>
+                            &nbsp; &nbsp; Connect Wallet &nbsp; &nbsp;
+                        </button>
+                    </>
+                    :
+                    <>
+                        <span className="inline-block my-auto">
+                            {this.state.currentAccount}
+                        </span>
+                    </>}
             </div >
 
         )

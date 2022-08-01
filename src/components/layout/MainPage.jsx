@@ -3,7 +3,13 @@ import { Header } from './Header.jsx'
 import { Grid } from '@mui/material';
 import { TokenomTeam } from '../TokenomTeam.jsx';
 import { FindOpponent } from './FindOpponent.jsx';
-
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+} from "react-router-dom";
+import { FightPage } from './FightPage.jsx';
+import { useParams } from 'react-router-dom';
 
 export class MainPage extends Component {
 
@@ -18,26 +24,48 @@ export class MainPage extends Component {
     render() {
         return <>
 
-            <header className='header-section is-sticky'>
+            <header className='header'>
                 <Header />
             </header>
 
-            <body>
-                <Grid container spacing={2}>
+            <div className='content overflow-hidden'>
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path='/' element={
+                            <div className='grid grid-cols-3 p-[1%] '>
+                                <div className='h-[80vh] overflow-scroll'>
+                                    <TokenomTeam></TokenomTeam>
+                                </div>
+                                <div className='col-span-2'>
+                                    <FindOpponent></FindOpponent>
+                                </div>
+                            </div>
+                        }></Route>
+                        <Route path='/fight/:id/:vsId' element={<FightPageFunction />}></Route>
+                    </Routes>
+                </BrowserRouter>
 
-                    <TokenomTeam></TokenomTeam>
-                    <Grid item xs={8}>
-                        <FindOpponent></FindOpponent>
-                    </Grid>
-                </Grid>
-            </body>
+            </div>
 
 
 
-            <footer>
-                {/* <Footer /> */}
+            <footer className='footer bg-black flex'>
+                <p className='text-white m-auto'>Made by Guigui</p>
             </footer>
         </>
 
     }
+}
+
+
+
+function FightPageFunction() {
+    // Get the userId param from the URL.
+    let { id, vsId } = useParams();
+
+    return (
+        <div className="h-full" >
+            <FightPage id={id} vsId={vsId}></FightPage>
+        </div>
+    );
 }

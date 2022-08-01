@@ -1,10 +1,8 @@
-import React, { Component, useCallback } from 'react';
+import React, { Component } from 'react';
+import BattleDataContext from './BattleDataContext.jsx';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
-import BattleDataContext from './BattleDataContext.jsx';
-
-import { Button } from '@mui/material';
-
+import { Link, useNavigate } from 'react-router-dom'
 
 export class StartFight extends Component {
 
@@ -37,9 +35,35 @@ export class StartFight extends Component {
         clearInterval(this.interval);
     }
 
+    startFight = async () => {
+        try {
+            const { ethereum } = window;
+
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
+
+                let tokenTxn = await tokenContract.startBattle(this.state.selectedAlly, this.state.selectedEnnemy);
+
+                console.log("waiting for tx");
+                await tokenTxn.wait();
+
+                alert(<p>Battle started, go to the <Link to={"fight/" + this.state.selectedAlly +"/" + this.state.selectedEnnemy}>the Fight page</Link></p>)
+
+
+            } else {
+                console.log("Ethereum object does not exist");
+            }
+
+        } catch (err) {
+            alert(err.data.message.split("revert")[1]);
+        }
+    }
+
     render () {
         return(
-            <Button variant="contained" style={{ backgroundColor: "red", fontSize: "200%" }} className='BattleButton' disabled={!(this.state.selectedAlly !== null && this.state.selectedEnnemy !== null && this.state.selectedAlly !== this.state.selectedEnnemy)}> &#9876; Fight ! &#9876; </Button>
+            <button className="bg-red-600 w-full h-[10vh] disabled:bg-red-900 hover:bg-red-700" variant="contained" onClick={this.startFight} disabled={!(this.state.selectedAlly !== null && this.state.selectedEnnemy !== null && this.state.selectedAlly !== this.state.selectedEnnemy)}> &#9876; Fight ! &#9876; </button>
         )
     }
 }

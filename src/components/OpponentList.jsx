@@ -38,8 +38,8 @@ export class OpponentList extends Component {
 
                 let potentialsOpponentsIds = []
 
-                while (potentialsOpponentsIds.length <= 9 && potentialsOpponentsIds.length < supply) {
-                    let value = Math.floor(Math.random() * supply +1);
+                while (potentialsOpponentsIds.length < 9 && potentialsOpponentsIds.length < supply) {
+                    let value = Math.floor(Math.random() * supply + 1);
                     if (potentialsOpponentsIds.find(element => element === value) === undefined) {
                         potentialsOpponentsIds.push(value);
                     }
@@ -48,7 +48,7 @@ export class OpponentList extends Component {
                 let potentialsOpponentsStats = []
                 for (const id of potentialsOpponentsIds) {
                     let pokemonStats = await tokenContract.pokemonStats(id);
-                    const pokemonStatsWithId = Object.assign({tokenomId: id}, pokemonStats);
+                    const pokemonStatsWithId = Object.assign({ tokenomId: id }, pokemonStats);
                     potentialsOpponentsStats.push(pokemonStatsWithId);
                 }
 
@@ -85,16 +85,12 @@ export class OpponentList extends Component {
 
     render() {
         return (
-            <div style={{ height: "100%" }}>
-                <ImageList cols={3} style={{ height: "100%" }} gap={0} >
+            <div className='h-full grid grid-rows-3 grid-flow-col gap-4'>
                     {this.state.potentialsOpponentsList.map((opponent, i) => (
-                        <button key={opponent.tokenomId} className='invisibleButton' onClick={() => this.selectTokenomHandler(i)}>
-                            <ImageListItem key={i}>
-                                <OpponentCard key={i} tokenom={opponent} selected={this.state.selectedOpponent === i ? true : false}></OpponentCard>
-                            </ImageListItem>
+                        <button key={opponent.tokenomId} className='card rounded' onClick={() => this.selectTokenomHandler(i)}>
+                            <OpponentCard key={i} tokenom={opponent} selected={this.state.selectedOpponent === i ? true : false}></OpponentCard>
                         </button>
                     ))}
-                </ImageList>
             </div>
         )
     }

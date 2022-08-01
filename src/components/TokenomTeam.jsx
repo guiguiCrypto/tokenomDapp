@@ -76,161 +76,110 @@ export class TokenomTeam extends Component {
 
 
         return (
-            <Grid item xs={4}>
-                <Stack spacing={2}>
-                    <h2>Select your Tokenom</h2>
+            <>
+                <h2>Select your Tokenom</h2>
+                <div className='grid grid-rows-6 gap-4 pt-5'>
+
+
                     {
                         (this.state.ids[0] != null)
                             ?
-                            (<>
-                                <button className='invisibleButton' onClick={() => this.selectTokenomHandler(0)} >
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 0 ? "10px 5px 5px black" : "" }}>
-                                        <CardContent className={this.state.activeTokenom === 0 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
-                                            <TokenomSlot tokenomId={this.state.ids[0]} ></TokenomSlot>
-                                        </CardContent>
-                                    </Card>
-                                </button>
-                            </>)
-                            :
-                            (<>
-                                <div>
-                                    <Card className="tokenomSlot" >
-                                        <CardContent>
-                                            <h3>this slot is empty, you can mint a new tokenom</h3>
-                                            <MintButton></MintButton>
-                                        </CardContent>
-                                    </Card>
+                            <button className='h-full card mx-5' onClick={() => this.selectTokenomHandler(0)} >
+                                <div className={this.state.activeTokenom === 0 ? "bg-green-300 shadow-xl h-full" : "h-full"} >
+                                    <TokenomSlot tokenomId={this.state.ids[0]} ></TokenomSlot>
                                 </div>
-                            </>)
+                            </button>
+                            :
+                            <div className="card h-full flex mx-5" >
+                                <div className='my-auto ml-10'>
+                                    <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
+                                    <MintButton></MintButton>
+                                </div>
+                            </div>
                     }
                     {
                         (this.state.ids[1] != null)
                             ?
-                            (<>
-                                <button className='invisibleButton' onClick={() => this.selectTokenomHandler(1)}>
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 1 ? "10px 5px 5px black" : "" }}>
-                                        <CardContent className={this.state.activeTokenom === 1 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
-                                            <TokenomSlot tokenomId={this.state.ids[1]} ></TokenomSlot>
-                                        </CardContent>
-                                    </Card>
-                                </button>
-                            </>)
-                            :
-                            (<>
-                                <div>
-                                    <Card className="tokenomSlot" >
-                                        <CardContent>
-                                            <h3>this slot is empty, you can mint a new tokenom</h3>
-                                            <MintButton></MintButton>
-                                        </CardContent>
-                                    </Card>
+                            <button className='h-full card mx-5' onClick={() => this.selectTokenomHandler(1)} >
+                                <div className={this.state.activeTokenom === 1 ? "bg-green-300 shadow-xl h-full" : "h-full"} >
+                                    <TokenomSlot tokenomId={this.state.ids[1]} ></TokenomSlot>
                                 </div>
-
-                            </>)
+                            </button>
+                            :
+                            <div className="card h-full flex mx-5" >
+                                <div className='my-auto ml-10'>
+                                    <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
+                                    <MintButton></MintButton>
+                                </div>
+                            </div>
                     }
                     {
                         (this.state.ids[2] != null)
                             ?
-                            (<>
-                                <button className='invisibleButton' onClick={() => this.selectTokenomHandler(2)}>
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 2 ? "10px 5px 5px black" : "" }}>
-                                        <CardContent className={this.state.activeTokenom === 2 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
-                                            <TokenomSlot tokenomId={this.state.ids[2]} ></TokenomSlot>
-                                        </CardContent>
-                                    </Card>
-                                </button>
-                            </>)
-                            :
-                            (<>
-                                <div>
-                                    <Card className="tokenomSlot" >
-                                        <CardContent>
-                                            <h3>this slot is empty, you can mint a new tokenom</h3>
-                                            <MintButton></MintButton>
-                                        </CardContent>
-
-                                    </Card>
+                            <button className='h-full card mx-5' onClick={() => this.selectTokenomHandler(2)} >
+                                <div className={this.state.activeTokenom === 2 ? "bg-green-300 shadow-xl h-full" : "h-full"} >
+                                    <TokenomSlot tokenomId={this.state.ids[2]} ></TokenomSlot>
                                 </div>
-                            </>)
+                            </button>
+                            :
+                            <div className="card h-full flex mx-5" >
+                                <div className='my-auto ml-10'>
+                                    <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
+                                    <MintButton></MintButton>
+                                </div>
+                            </div>
                     }
                     {
                         (this.state.ids[3] != null)
                             ?
-                            (<>
-                                <button className='invisibleButton' onClick={() => this.selectTokenomHandler(3)}>
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 3 ? "10px 5px 5px black" : "" }}>
-                                        <CardContent className={this.state.activeTokenom === 3 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
-                                            <TokenomSlot tokenomId={this.state.ids[3]} ></TokenomSlot>
-                                        </CardContent>
-                                    </Card>
-                                </button>
-                            </>)
-                            :
-                            (<>
-                                <div>
-                                    <Card className="tokenomSlot" >
-                                        <CardContent>
-                                            <h3>this slot is empty, you can mint a new tokenom</h3>
-                                            <MintButton></MintButton>
-                                        </CardContent>
-
-                                    </Card>
+                            <button className='h-full card mx-5' onClick={() => this.selectTokenomHandler(3)} >
+                                <div className={this.state.activeTokenom === 3 ? "bg-green-300 shadow-xl h-full" : "h-full"} >
+                                    <TokenomSlot tokenomId={this.state.ids[3]} ></TokenomSlot>
                                 </div>
-                            </>)
+                            </button>
+                            :
+                            <div className="card h-full flex mx-5" >
+                                <div className='my-auto ml-10'>
+                                    <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
+                                    <MintButton></MintButton>
+                                </div>
+                            </div>
                     }
                     {
                         (this.state.ids[4] != null)
                             ?
-                            (<>
-                                <button className='invisibleButton' onClick={() => this.selectTokenomHandler(4)}>
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 4 ? "10px 5px 5px black" : "" }}>
-                                        <CardContent className={this.state.activeTokenom === 4 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
-                                            <TokenomSlot tokenomId={this.state.ids[4]} ></TokenomSlot>
-                                        </CardContent>
-                                    </Card>
-                                </button>
-                            </>)
-                            :
-                            (<>
-                                <div>
-                                    <Card className="tokenomSlot" >
-                                        <CardContent>
-                                            <h3>this slot is empty, you can mint a new tokenom</h3>
-                                            <MintButton></MintButton>
-                                        </CardContent>
-
-                                    </Card>
+                            <button className='h-full card mx-5' onClick={() => this.selectTokenomHandler(4)} >
+                                <div className={this.state.activeTokenom === 4 ? "bg-green-300 shadow-xl h-full" : "h-full"} >
+                                    <TokenomSlot tokenomId={this.state.ids[4]} ></TokenomSlot>
                                 </div>
-                            </>)
+                            </button>
+                            :
+                            <div className="card h-full flex mx-5" >
+                                <div className='my-auto ml-10'>
+                                    <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
+                                    <MintButton></MintButton>
+                                </div>
+                            </div>
                     }
 
                     {
                         (this.state.ids[5] != null)
                             ?
-                            (<>
-                                <button className='invisibleButton' onClick={() => this.selectTokenomHandler(5)}>
-                                    <Card className="tokenomSlot" style={{ height: "100%", display: "flex", boxShadow: this.state.activeTokenom === 5 ? "10px 5px 5px black" : "" }}>
-                                        <CardContent className={this.state.activeTokenom === 5 ? "selectedAlly" : ""} style={{ flexGrow: "1" }}>
-                                            <TokenomSlot tokenomId={this.state.ids[5]} ></TokenomSlot>
-                                        </CardContent>
-                                    </Card>
-                                </button>
-                            </>)
-                            :
-                            (<>
-                                <div>
-                                    <Card className="tokenomSlot" >
-                                        <CardContent>
-                                            <h3>this slot is empty, you can mint a new tokenom</h3>
-                                            <MintButton></MintButton>
-                                        </CardContent>
-
-                                    </Card>
+                            <button className='h-full card mx-5' onClick={() => this.selectTokenomHandler(5)} >
+                                <div className={this.state.activeTokenom === 5 ? "bg-green-300 shadow-xl h-full" : "h-full"} >
+                                    <TokenomSlot tokenomId={this.state.ids[5]} ></TokenomSlot>
                                 </div>
-                            </>)
+                            </button>
+                            :
+                            <div className="card h-full flex mx-5" >
+                                <div className='my-auto ml-10'>
+                                    <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
+                                    <MintButton></MintButton>
+                                </div>
+                            </div>
                     }
-                </Stack>
-            </Grid >
+                </div>
+            </>
         )
     }
 

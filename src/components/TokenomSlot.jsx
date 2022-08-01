@@ -54,21 +54,19 @@ export class TokenomSlot extends Component {
 
     render() {
         return (
-            <div>
+            <div className="h-full">
                 {
                     (this.state.tokenomId != null)
                         ?
-                        (<>
-                            <img className='tokenomImage' src={tokenom1}></img>
-                            {/*<image uri={this.state.uri}></image> */}
-                            <div>
+                        (<div className='grid grid-cols-2'>
+                            <img className='tokenomImage w-[50%] m-auto' src={tokenom1}></img>
+                            <div className='text-left my-auto'>
                                 <h1>name : {this.state.name}</h1>
                                 <p>level : {this.state.level}</p>
                                 <p>LifePoint : {this.state.maxLifePoint}</p>
 
                             </div>
-
-                        </>)
+                        </div>)
                         :
                         (<>
                             <h1>this slot is empty, you can mint a new tokenom</h1>

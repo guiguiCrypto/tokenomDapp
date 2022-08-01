@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { OpponentList } from '../OpponentList';
 import { StartFight } from '../StartFight';
+import refresh from '../../images/refresh.svg'
 
 
 
@@ -23,9 +24,9 @@ export class FindOpponent extends Component {
         return (
             <div>
                 <section className="layout">
-                    <div style={{ display: "block" }}>
-                        <button className="refreshButton" onClick={this.refreshHandler}>
-                            Refresh
+                    <div className='h-20' style={{  display: "block" }}>
+                        <button className="float-right" onClick={this.refreshHandler}>
+                            <img className='w-[5vh] m-[2vh] hover:w-[7vh] hover:m-[1vh]' src={refresh} alt="refreshButton"></img>
                         </button>
                         <h1>
                             Select an opponent

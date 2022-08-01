@@ -1,6 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.attackButton {
+  @apply bg-red-400 hover:bg-red-600 border-double border-red-900 border-2 rounded-md disabled:bg-red-100
+}
+
+.attackColumn {
+  @apply grid grid-cols-2 gap-2
+}
+
+.card {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
 .logo {
-  height: 50px;
-  width: 50px;
+  height: 80%;
+}
+
+html, body, #root {
+  height: 100vh;
+}
+
+.header {
+  height: 10vh;
+}
+
+.footer {
+  height: 5vh;
+}
+
+.content {
+  height: 85vh;
 }
 
 .tokenomSlot {
@@ -11,13 +42,6 @@
   background: transparent;
   border: none !important;
   cursor:pointer;
-
-}
-
-.tokenomImage {
-  height: 25%;
-  width: 25%;
-  float:left;
 }
 
 .selectedAlly {
@@ -44,4 +68,43 @@
 .BattleButton {
   width: 100%;
   height: 50%;
+}
+
+.fightGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.allyFightDiv {
+  grid-area: 1 / 1 / 2 / 2;
+  height: 100%;
+}
+
+.ennemyFightDiv { 
+  grid-area: 1 / 2 / 2 / 3; 
+}
+
+
+.parent {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin: 5%;
+  padding: 3%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  }
+  
+  .div1 { grid-area: 1 / 2 / 2 / 3; }
+  .div2 { grid-area: 1 / 1 / 2 / 2; }
+  .div3 { grid-area: 2 / 1 / 3 / 2; }
+
+.AllyFightCardImage {
+  
+  height: 75%;
+  text-align: right;
+
 }

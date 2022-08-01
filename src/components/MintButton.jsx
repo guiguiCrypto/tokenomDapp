@@ -50,8 +50,9 @@ export class MintButton extends Component {
                     value={this.state.name}
                     onChange={this.handleChange}
                     placeholder="Enter a name"
+                    className='border border-gray-300 shadow-inner focus:shadow-outline'
                 />
-                <button onClick={this.mintNftHandler} disabled={this.state.name == ""}>Mint TOKENOM</button>
+                <button className='ml-6 p-3 bg-blue-500 text-back rounded disabled:bg-blue-300' onClick={this.mintNftHandler} disabled={this.state.name == ""}>Mint TOKENOM</button>
             </div>
 
         )
