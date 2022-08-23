@@ -12,32 +12,6 @@ export class MintButton extends Component {
         }
     }
 
-    mintNftHandler = async () => {
-        try {
-            const { ethereum } = window;
-
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
-
-                let tokenTxn = await tokenContract.mint(this.state.name);
-
-                console.log("waiting for tx");
-                await tokenTxn.wait();
-
-                console.log("tx validated");
-
-
-            } else {
-                console.log("Ethereum object does not exist");
-            }
-
-        } catch (err) {
-            alert(err.data.message.split("revert")[1]);
-        }
-    }
-
     handleChange = (e) => {
         this.setState({ name: e.target.value });
     };
@@ -52,7 +26,7 @@ export class MintButton extends Component {
                     placeholder="Enter a name"
                     className='border border-gray-300 shadow-inner focus:shadow-outline'
                 />
-                <button className='ml-6 p-3 bg-blue-500 text-back rounded disabled:bg-blue-300' onClick={this.mintNftHandler} disabled={this.state.name == ""}>Mint TOKENOM</button>
+                <button className='ml-6 p-3 bg-blue-500 text-back rounded disabled:bg-blue-300' onClick={ () => this.props.mintNftHandler(this.state.name)} disabled={this.state.name == ""}>Mint TOKENOM</button>
             </div>
 
         )

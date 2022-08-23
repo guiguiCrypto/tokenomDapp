@@ -57,6 +57,33 @@ export class TokenomTeam extends Component {
         }
     }
 
+    mintNftHandler = async (name) => {
+        try {
+            const { ethereum } = window;
+
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
+
+                let tokenTxn = await tokenContract.mint(name);
+
+                console.log("waiting for tx");
+                await tokenTxn.wait();
+
+                this.updateTokenomTeamData();
+                console.log("tx validated");
+
+
+            } else {
+                console.log("Ethereum object does not exist");
+            }
+
+        } catch (err) {
+            alert(err.data.message.split("revert")[1]);
+        }
+    }
+
     selectTokenomHandler = async (id) => {
         const { setSelectedAlly } = this.context
 
@@ -93,7 +120,7 @@ export class TokenomTeam extends Component {
                             <div className="card h-full flex mx-5" >
                                 <div className='my-auto ml-10'>
                                     <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
-                                    <MintButton></MintButton>
+                                    <MintButton mintNftHandler ={this.mintNftHandler}></MintButton>
                                 </div>
                             </div>
                     }
@@ -109,7 +136,7 @@ export class TokenomTeam extends Component {
                             <div className="card h-full flex mx-5" >
                                 <div className='my-auto ml-10'>
                                     <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
-                                    <MintButton></MintButton>
+                                    <MintButton mintNftHandler ={this.mintNftHandler}></MintButton>
                                 </div>
                             </div>
                     }
@@ -125,7 +152,7 @@ export class TokenomTeam extends Component {
                             <div className="card h-full flex mx-5" >
                                 <div className='my-auto ml-10'>
                                     <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
-                                    <MintButton></MintButton>
+                                    <MintButton mintNftHandler ={this.mintNftHandler}></MintButton>
                                 </div>
                             </div>
                     }
@@ -141,7 +168,7 @@ export class TokenomTeam extends Component {
                             <div className="card h-full flex mx-5" >
                                 <div className='my-auto ml-10'>
                                     <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
-                                    <MintButton></MintButton>
+                                    <MintButton mintNftHandler ={this.mintNftHandler}></MintButton>
                                 </div>
                             </div>
                     }
@@ -157,7 +184,7 @@ export class TokenomTeam extends Component {
                             <div className="card h-full flex mx-5" >
                                 <div className='my-auto ml-10'>
                                     <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
-                                    <MintButton></MintButton>
+                                    <MintButton mintNftHandler ={this.mintNftHandler}></MintButton>
                                 </div>
                             </div>
                     }
@@ -174,7 +201,7 @@ export class TokenomTeam extends Component {
                             <div className="card h-full flex mx-5" >
                                 <div className='my-auto ml-10'>
                                     <h3 className='my-3'>this slot is empty, you can mint a new tokenom</h3>
-                                    <MintButton></MintButton>
+                                    <MintButton mintNftHandler ={this.mintNftHandler}></MintButton>
                                 </div>
                             </div>
                     }

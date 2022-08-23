@@ -33,7 +33,7 @@ export class MainPage extends Component {
                     <Routes>
                         <Route exact path='/' element={
                             <div className='grid grid-cols-3 p-[1%] '>
-                                <div className='h-[80vh] overflow-scroll'>
+                                <div className='h-[80vh] overflow-y-scroll'>
                                     <TokenomTeam></TokenomTeam>
                                 </div>
                                 <div className='col-span-2'>
