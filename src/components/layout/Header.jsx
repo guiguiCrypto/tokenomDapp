@@ -29,7 +29,6 @@ export class Header extends Component {
             window.location.reload();
         });
 
-        this.connectWalletHandler()
     }
 
 
