@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import * as Constants from './Constants.jsx';
-import { ethers } from 'ethers';
 
 
 export class MintButton extends Component {
@@ -26,7 +24,7 @@ export class MintButton extends Component {
                     placeholder="Enter a name"
                     className='border border-gray-300 shadow-inner focus:shadow-outline'
                 />
-                <button className='ml-6 p-3 bg-blue-500 text-back rounded disabled:bg-blue-300' onClick={ () => this.props.mintNftHandler(this.state.name)} disabled={this.state.name == ""}>Mint TOKENOM</button>
+                <button className='ml-6 p-3 bg-blue-500 text-back rounded disabled:bg-blue-300' onClick={ () => this.props.mintNftHandler(this.state.name)} disabled={this.state.name === ""}>Mint TOKENOM</button>
             </div>
 
         )

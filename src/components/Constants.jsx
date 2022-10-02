@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import tokenomContract from '../abi/Pokemon.json';
+import tokenomContract from '../abi/Tokenom.json';
 
-export const TOKENOMADRESS = process.env.TOKENOM_ADRESS
+export const TOKENOMADRESS = process.env.REACT_APP_TOKENOM_ADRESS
 
 export const TOKENOMABI = tokenomContract.abi;

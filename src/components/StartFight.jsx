@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BattleDataContext from './BattleDataContext.jsx';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 export class StartFight extends Component {
 

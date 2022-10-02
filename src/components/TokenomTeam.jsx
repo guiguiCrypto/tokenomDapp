@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
-import { Grid, Stack } from '@mui/material';
 import { TokenomSlot } from './TokenomSlot.jsx';
 import { MintButton } from './MintButton.jsx';
-import { Card, CardContent } from '@mui/material';
 import "../App.css";
 import BattleDataContext from './BattleDataContext.jsx';
 

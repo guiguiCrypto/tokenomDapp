@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Paper } from '@mui/material';
 import tokenom1 from '../images/Tokenom1.png'
 import { LinearProgress } from '@mui/material';
-import { Timer } from './Timer.jsx'
 import { AttackButton } from './AttackButton';
 
 
@@ -31,7 +29,7 @@ export class EnnemyFightingCard extends Component {
         return (
             <div className="bg-red-200 h-full p-[2%] grid grid-rows-2 grid-flow-col gap-4  ">
                 <div className='grid-cols-2'>
-                    <img src={tokenom1} className="w-[40%] float-right" style={{transform: "scaleX(-1)"}}></img>
+                    <img src={tokenom1} className="w-[40%] float-right" alt='tokenom' style={{transform: "scaleX(-1)"}}></img>
                     <div >
                         <h1 className='font-medium text-4xl '>Name :  {this.state.tokenom.name}</h1>
                     </div>

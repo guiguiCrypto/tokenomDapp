@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
-import tokenom1 from '../images/Tokenom1.png'
 
 
 
@@ -33,7 +32,7 @@ export class TokenomSlot extends Component {
                 const signer = provider.getSigner();
                 const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
 
-                let tokenom = await tokenContract.pokemonStats(this.state.tokenomId);
+                let tokenom = await tokenContract.tokenomStats(this.state.tokenomId);
                 let tokenomURI = await tokenContract.tokenURI(this.state.tokenomId)
 
                 this.setState({
@@ -59,7 +58,7 @@ export class TokenomSlot extends Component {
                     (this.state.tokenomId != null)
                         ?
                         (<div className='grid grid-cols-2'>
-                            <img className='tokenomImage w-[50%] m-auto' src={tokenom1}></img>
+                            <img className='tokenomImage w-[50%] m-auto' alt='tokenom' src={"https://ipfs.io/" + this.state.uri}></img>
                             <div className='text-left my-auto'>
                                 <h1>name : {this.state.name}</h1>
                                 <p>level : {this.state.level}</p>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Header } from './Header.jsx'
-import { Grid } from '@mui/material';
+import { Header } from './Header.jsx';
 import { TokenomTeam } from '../TokenomTeam.jsx';
 import { FindOpponent } from './FindOpponent.jsx';
 import {

@@ -5,18 +5,6 @@ import { AllyFightingCard } from '../AllyFightingCard.jsx';
 import Alert from '@mui/material/Alert';
 import { EnnemyFightingCard } from '../EnnemyFightingCard.jsx';
 
-const tokenomStub = {
-    name: "guigui",
-    level: 1,
-    maxLifePoint: 15,
-    attacks: [5, 0, 3, 10],
-    isFighting: true,
-    versusId: 3,
-    lifePoint: 9,
-    cooldown: false,
-    lastAttack: 1659265783
-}
-
 export class FightPage extends Component {
 
     constructor(props) {
@@ -42,7 +30,7 @@ export class FightPage extends Component {
                 const signer = provider.getSigner();
                 const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
 
-                let allyData = await tokenContract.pokemonStats(this.props.id);
+                let allyData = await tokenContract.tokenomStats(this.props.id);
                 console.log(allyData)
 
                 this.setState({
@@ -66,7 +54,7 @@ export class FightPage extends Component {
                 const signer = provider.getSigner();
                 const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
 
-                let ennemyData = await tokenContract.pokemonStats(this.props.vsId);
+                let ennemyData = await tokenContract.tokenomStats(this.props.vsId);
 
                 this.setState({
                     ennemyTokenom: ennemyData
@@ -88,7 +76,7 @@ export class FightPage extends Component {
                     ?
                     <Alert variant="filled" severity="warning">Your Tokenom is not in a fight - Click here to find an <a href={'/'}><strong>opponent</strong></a></Alert>
                     :
-                    (this.state.allyTokenom != null && this.state.allyTokenom.versusId != this.props.vsId)
+                    (this.state.allyTokenom != null && this.state.allyTokenom.versusId !== this.props.vsId)
                         ?
                         <Alert variant="filled" severity="warning">Your tokenom is fighting another tokenom - Click here to go the good <a href={'/fight/'+ this.props.id + '/' + this.state.allyTokenom.versusId} ><strong>Fight</strong></a></Alert>
                         :

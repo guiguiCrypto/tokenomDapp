@@ -1,8 +1,7 @@
-import React, { Component, useCallback } from 'react';
+import React, { Component } from 'react';
 import * as Constants from './Constants.jsx';
 import { ethers } from 'ethers';
 import { OpponentCard } from './OpponentCard.jsx';
-import { ImageList, ImageListItem } from '@mui/material';
 import BattleDataContext from './BattleDataContext.jsx';
 
 
@@ -36,7 +35,7 @@ export class OpponentList extends Component {
 
                 let supply = await tokenContract.totalSupply();
 
-                let potentialsOpponentsIds = []
+                let potentialsOpponentsIds = [];
 
                 while (potentialsOpponentsIds.length < 9 && potentialsOpponentsIds.length < supply) {
                     let value = Math.floor(Math.random() * supply + 1);
@@ -45,14 +44,15 @@ export class OpponentList extends Component {
                     }
                 }
 
-                let potentialsOpponentsStats = []
+                let potentialsOpponentsStats = [];
                 for (const id of potentialsOpponentsIds) {
-                    let pokemonStats = await tokenContract.pokemonStats(id);
-                    const pokemonStatsWithId = Object.assign({ tokenomId: id }, pokemonStats);
-                    potentialsOpponentsStats.push(pokemonStatsWithId);
+                    let tokenomStats = await tokenContract.tokenomStats(id);
+                    let tokenomURI = await tokenContract.tokenURI(id);
+                    tokenomStats = Object.assign({}, tokenomStats, {uri: tokenomURI})
+                    const tokenomStatsWithId = Object.assign({ tokenomId: id }, tokenomStats);
+                    potentialsOpponentsStats.push(tokenomStatsWithId);
                 }
 
-                console.log(potentialsOpponentsStats);
                 this.setState({
                     potentialsOpponentsIds: potentialsOpponentsIds,
                     potentialsOpponentsList: potentialsOpponentsStats
@@ -75,8 +75,6 @@ export class OpponentList extends Component {
             id = null;
             setSelectedEnnemy(null);
         }
-
-
 
         this.setState({
             selectedOpponent: id
