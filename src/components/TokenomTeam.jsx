@@ -104,7 +104,7 @@ export class TokenomTeam extends Component {
 
         return (
             <>
-                <h2>Select your Tokenom</h2>
+                <h1 className='text-xl mb-5'>Select your Tokenom</h1>
                 <div className='grid grid-rows-6 gap-4 pt-5'>
 
 

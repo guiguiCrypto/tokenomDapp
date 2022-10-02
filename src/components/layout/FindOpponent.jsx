@@ -28,7 +28,7 @@ export class FindOpponent extends Component {
                         <button className="float-right" onClick={this.refreshHandler}>
                             <img className='w-[5vh] m-[2vh] hover:w-[7vh] hover:m-[1vh]' src={refresh} alt="refreshButton"></img>
                         </button>
-                        <h1>
+                        <h1 className='text-xl mb-5 ml-5'>
                             Select an opponent
                         </h1>
                     </div>

@@ -18,7 +18,7 @@ export class MintButton extends Component {
 
     render() {
         return (
-            <div>
+            <div className='mb-5'>
                 <input
                     type="text"
                     value={this.state.name}

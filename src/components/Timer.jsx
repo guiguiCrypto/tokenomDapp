@@ -19,6 +19,8 @@ export class Timer extends Component {
             this.updateTimer,
             1000,
         );
+
+        //todo : retrieve attack cooldown from contract
     }
 
     updateTimer = () => {
