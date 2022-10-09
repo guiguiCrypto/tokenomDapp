@@ -69,7 +69,7 @@ export class OpponentList extends Component {
 
     render() {
         return (
-            <div className='h-full grid grid-rows-3 grid-flow-col gap-4'>
+            <div className='h-full grid grid-rows-3 grid-flow-col gap-4 p-5'>
                 {this.state.potentialsOpponentsList.map((opponent, i) => (
                     <button key={opponent.tokenomId} className='card rounded' onClick={() => this.selectTokenomHandler(i)}>
                         <OpponentCard key={i} tokenom={opponent} selected={this.state.selectedOpponent === i ? true : false}></OpponentCard>

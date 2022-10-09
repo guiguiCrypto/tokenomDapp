@@ -35,7 +35,7 @@ export class FindOpponent extends Component {
                     <div>
                         <OpponentList key={this.state.render}></OpponentList>
                     </div>
-                    <div>
+                    <div className='px-5'>
                         <StartFight></StartFight>
                     </div>
                 </section>
