@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import fight from '../images/fight.svg'
+import fight from '../images/fight.svg';
+import TokenomContractCall from './utils/BlockchainCall.jsx';
+
 
 
 export class Timer extends Component {
@@ -9,7 +11,8 @@ export class Timer extends Component {
         super(props);
         this.state = {
             lastAttack: null,
-            attackReady: false
+            attackReady: false,
+            baseCooldown: 3600
         }
     }
 
@@ -20,20 +23,23 @@ export class Timer extends Component {
             1000,
         );
 
-        //todo : retrieve attack cooldown from contract
+        TokenomContractCall("attackCooldown", []).then((result) => {
+            this.setState({ baseCooldown : result})
+        });
     }
 
     updateTimer = () => {
 
         let secondesSinceLastAttack = (Math.floor(Date.now() / 1000) - this.props.lastAttack)
 
-        if (secondesSinceLastAttack > 3600) {
+
+        if (secondesSinceLastAttack > this.state.baseCooldown) {
             this.setState({ attackReady: true })
             clearInterval(this.timer);
         }
 
         this.setState({
-            lastAttack: 3600 - secondesSinceLastAttack
+            lastAttack: this.state.baseCooldown - secondesSinceLastAttack
         })
     }
 

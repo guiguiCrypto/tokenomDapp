@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import * as Constants from './Constants.jsx';
-import { ethers } from 'ethers';
-
+import React, { Component, useEffect, useState } from 'react';
+import TokenomContractCall from './utils/BlockchainCall.jsx';
+import { Link } from 'react-router-dom';
 
 
 export class TokenomSlot extends Component {
@@ -10,9 +9,7 @@ export class TokenomSlot extends Component {
         super(props);
         this.state = {
             tokenomId: props.tokenomId,
-            name: "",
-            level: null,
-            maxLifePoint: 0,
+            tokenom: null,
             uri: ""
         }
     }
@@ -24,48 +21,31 @@ export class TokenomSlot extends Component {
     }
 
     updateTokenomData = async () => {
-        try {
-            const { ethereum } = window;
+        let tokenom = await TokenomContractCall("tokenomStats", [this.state.tokenomId])
+        let tokenomURI = await TokenomContractCall("tokenURI", [this.state.tokenomId])
 
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
-
-                let tokenom = await tokenContract.tokenomStats(this.state.tokenomId);
-                let tokenomURI = await tokenContract.tokenURI(this.state.tokenomId)
-
-                this.setState({
-                    name: tokenom.name,
-                    level: tokenom.level,
-                    maxLifePoint: tokenom.maxLifePoint,
-                    uri: tokenomURI
-                });
-
-            } else {
-                console.log("Ethereum object does not exist");
-            }
-
-        } catch (err) {
-            console.log(err);
-        }
+        this.setState({
+            tokenom: tokenom,
+            uri: tokenomURI
+        });
     }
 
     render() {
         return (
             <div className="h-full">
                 {
-                    (this.state.tokenomId != null)
+                    (this.state.tokenom != null)
                         ?
-                        (<div className='grid grid-cols-2'>
+                        (<><div className='grid grid-cols-2'>
                             <img className='tokenomImage w-[50%] m-auto' alt='tokenom' src={"https://ipfs.io/" + this.state.uri}></img>
                             <div className='text-left my-auto'>
-                                <h1>name : {this.state.name}</h1>
-                                <p>level : {this.state.level}</p>
-                                <p>LifePoint : {this.state.maxLifePoint}</p>
-
+                                <h1>name : {this.state.tokenom.name} </h1>
+                                <p>level : {this.state.tokenom.level}</p>
+                                <p>LifePoint : {this.state.tokenom.maxLifePoint}</p>
                             </div>
-                        </div>)
+                        </div>
+                            <FightLink tokenom={this.state.tokenom} tokenomId={this.state.tokenomId}></FightLink>
+                        </>)
                         :
                         (<>
                             <h1>this slot is empty, you can mint a new tokenom</h1>
@@ -77,4 +57,39 @@ export class TokenomSlot extends Component {
         );
     }
 
+}
+
+function FightLink(props) {
+    const link = <Link className='hover:cursor-crosshair' to={"/fight/" + props.tokenomId + "/" + props.tokenom.versusId}><strong>here</strong></Link>
+
+    const [isTurn, setIsTurn] = useState(false);
+
+    useEffect(() => {
+        function updateTurn () {
+            TokenomContractCall("attackCooldown", []).then((cooldown) => {
+                let secondesSinceLastAttack = (Math.floor(Date.now() / 1000) - props.tokenom.lastAttack)
+                console.log(secondesSinceLastAttack)
+                if (!props.tokenom.cooldown) {
+                    setIsTurn(true);
+                }
+                else setIsTurn(secondesSinceLastAttack > cooldown.toNumber());
+            })
+        }
+        updateTurn();
+
+        const timer = setTimeout(() => {
+            updateTurn();
+        }, 60000);
+        return () => clearTimeout(timer);
+    }, [props])
+
+
+    if (props.tokenom.isFighting) {
+
+        if (!isTurn) {
+            return <p>Currently fighting but attack in cooldown : see fight {link}</p>
+        }
+        else return <p>Currently fighting and its your turn to attack : see fight {link}</p>
+    }
+    return <></>
 }

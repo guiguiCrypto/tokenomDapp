@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import * as Constants from '../Constants.jsx';
-import { ethers } from 'ethers';
+import TokenomContractCall from '../utils/BlockchainCall.jsx';
 import { AllyFightingCard } from '../AllyFightingCard.jsx';
 import Alert from '@mui/material/Alert';
 import { EnnemyFightingCard } from '../EnnemyFightingCard.jsx';
@@ -22,50 +21,19 @@ export class FightPage extends Component {
 
 
     retrieveAllyTokenomData = async () => {
-        try {
-            const { ethereum } = window;
+        let allyData = await TokenomContractCall("tokenomStats", [this.props.id]);
 
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
-
-                let allyData = await tokenContract.tokenomStats(this.props.id);
-                console.log(allyData)
-
-                this.setState({
-                    allyTokenom: allyData
-                })
-            } else {
-                console.log("Ethereum object does not exist");
-            }
-
-        } catch (err) {
-            console.log(err);
-        }
+        this.setState({
+            allyTokenom: allyData
+        })
     }
 
     retrieveEnnemyTokenomData = async () => {
-        try {
-            const { ethereum } = window;
+        let ennemyData = await TokenomContractCall("tokenomStats", [this.props.vsId]);
 
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const tokenContract = new ethers.Contract(Constants.TOKENOMADRESS, Constants.TOKENOMABI, signer);
-
-                let ennemyData = await tokenContract.tokenomStats(this.props.vsId);
-
-                this.setState({
-                    ennemyTokenom: ennemyData
-                })
-            } else {
-                console.log("Ethereum object does not exist");
-            }
-
-        } catch (err) {
-            console.log(err);
-        }
+        this.setState({
+            ennemyTokenom: ennemyData
+        })
     }
 
     render() {
@@ -76,7 +44,8 @@ export class FightPage extends Component {
                     ?
                     <Alert variant="filled" severity="warning">Your Tokenom is not in a fight - Click here to find an <a href={'/'}><strong>opponent</strong></a></Alert>
                     :
-                    (this.state.allyTokenom != null && this.state.allyTokenom.versusId !== this.props.vsId)
+                    // eslint-disable-next-line
+                    (this.state.allyTokenom != null && this.state.allyTokenom.versusId.toNumber() != this.props.vsId)
                         ?
                         <Alert variant="filled" severity="warning">Your tokenom is fighting another tokenom - Click here to go the good <a href={'/fight/'+ this.props.id + '/' + this.state.allyTokenom.versusId} ><strong>Fight</strong></a></Alert>
                         :

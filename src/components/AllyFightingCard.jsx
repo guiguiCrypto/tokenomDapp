@@ -65,25 +65,6 @@ export class AllyFightingCard extends Component {
 
 
             </div>
-
-
-
-
-
-
-            /*
-                <Paper elevation={3} className="parent" >
-                    <div class="div2" style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        justifyContent: "center",
-                    }}>
-                        <img src={tokenom1} className="AllyFightCardImage"></img>
-                    </div>
-
-                    <h2>{this.state.tokenom.name}</h2>
-                </Paper >
-                */
         )
     }
 
