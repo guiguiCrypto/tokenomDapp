@@ -51,7 +51,7 @@ export class TokenomTeam extends Component {
 
     mintNftHandler = async (name) => {
 
-        let tokenTxn = await TokenomContractCall("mint", name);
+        let tokenTxn = await TokenomContractCall("mint", [name]);
 
         await tokenTxn.wait();
 
