@@ -68,7 +68,6 @@ function FightLink(props) {
         function updateTurn () {
             TokenomContractCall("attackCooldown", []).then((cooldown) => {
                 let secondesSinceLastAttack = (Math.floor(Date.now() / 1000) - props.tokenom.lastAttack)
-                console.log(secondesSinceLastAttack)
                 if (!props.tokenom.cooldown) {
                     setIsTurn(true);
                 }

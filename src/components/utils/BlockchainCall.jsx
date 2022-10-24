@@ -17,7 +17,7 @@ const TokenomContractCall = async function (name, args = null){
             } else result = await tokenContract[name](...args);
             
 
-            console.log(`waiting for tx : ${name} with args : ${args}`);
+            //console.log(`waiting for tx : ${name} with args : ${args}`);
 
             return result;
         } else {
@@ -25,7 +25,7 @@ const TokenomContractCall = async function (name, args = null){
         }
 
     } catch (err) {
-        console.log(err)
+        console.log(err.message)
     }
 }
 
