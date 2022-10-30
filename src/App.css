@@ -108,3 +108,11 @@ html, body, #root {
   text-align: right;
 
 }
+
+#noMM {
+  background-image: url('../src/images/preview.png');
+}
+
+#blurBg {
+  backdrop-filter: blur(8px);
+}

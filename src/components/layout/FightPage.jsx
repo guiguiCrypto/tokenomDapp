@@ -1,91 +1,65 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import TokenomContractCall from '../utils/BlockchainCall.jsx';
-import { AllyFightingCard } from '../AllyFightingCard.jsx';
+import AllyFightingCard from '../AllyFightingCard.jsx';
 import Alert from '@mui/material/Alert';
-import { EnnemyFightingCard } from '../EnnemyFightingCard.jsx';
 
-export class FightPage extends Component {
+function FightPage(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            allyTokenom: null,
-            ennemyTokenom: null
+    const [allyTokenom, setAllyTokenom] = useState(null);
+    const [ennemyTokenom, setEnnemyTokenom] = useState(null);
+
+    useEffect(() => {
+        const retrieveAllyTokenomData = async () => {
+            let allyData = await TokenomContractCall("tokenomStats", [props.id]);
+
+            setAllyTokenom(allyData);
         }
-    }
+        const retrieveEnnemyTokenomData = async () => {
+            let ennemyData = await TokenomContractCall("tokenomStats", [props.vsId]);
 
-    componentDidMount = () => {
-        this.retrieveAllyTokenomData();
-        this.retrieveEnnemyTokenomData();
-    }
+            setEnnemyTokenom(ennemyData);
+        }
+        retrieveAllyTokenomData();
+        retrieveEnnemyTokenomData();
+    }, [props.id, props.vsId]);
 
-
-    retrieveAllyTokenomData = async () => {
-        let allyData = await TokenomContractCall("tokenomStats", [this.props.id]);
-
-        this.setState({
-            allyTokenom: allyData
-        })
-    }
-
-    retrieveEnnemyTokenomData = async () => {
-        let ennemyData = await TokenomContractCall("tokenomStats", [this.props.vsId]);
-
-        this.setState({
-            ennemyTokenom: ennemyData
-        })
-    }
-
-    render() {
-        return (
-            <>
-
-                {(this.state.allyTokenom != null && !this.state.allyTokenom.isFighting)
-                    ?
-                    <Alert variant="filled" severity="warning">Your Tokenom is not in a fight - Click here to find an <a href={'/'}><strong>opponent</strong></a></Alert>
-                    :
-                    // eslint-disable-next-line
-                    (this.state.allyTokenom != null && this.state.allyTokenom.versusId.toNumber() != this.props.vsId)
+    return <>
+        {(allyTokenom != null && !allyTokenom.isFighting)
+            ?
+            <Alert variant="filled" severity="warning">Your Tokenom is not in a fight - Click here to find an <a href={'/'}><strong>opponent</strong></a></Alert>
+            :
+            (allyTokenom != null && allyTokenom.versusId.toNumber() !== parseInt(props.vsId))
+                ?
+                <Alert variant="filled" severity="warning">Your tokenom is fighting another tokenom - Click here to go the good <a href={'/fight/' + props.id + '/' + allyTokenom.versusId} ><strong>Fight</strong></a></Alert>
+                :
+                <></>
+        }
+        <div className='fightGrid h-full p-2'>
+            <div className='p-3' >
+                {(allyTokenom != null)
                         ?
-                        <Alert variant="filled" severity="warning">Your tokenom is fighting another tokenom - Click here to go the good <a href={'/fight/'+ this.props.id + '/' + this.state.allyTokenom.versusId} ><strong>Fight</strong></a></Alert>
+                        (<>
+                            <AllyFightingCard tokenom={allyTokenom} tokenomId={props.id} ally={true}></AllyFightingCard>
+                        </>)
                         :
-                        <></>
+                        (<>
+                            <h1>loading</h1>
+                        </>)
                 }
-
-                <div className='fightGrid h-full p-2'>
-
-
-                    <div className='p-3' >
-                        {
-                            (this.state.allyTokenom != null)
-
-                                ?
-                                (<>
-                                    <AllyFightingCard tokenom={this.state.allyTokenom} tokenomId={this.props.id}></AllyFightingCard>
-                                </>)
-                                :
-                                (<>
-                                    <h1>loading</h1>
-                                </>)
-                        }
-                    </div>
-                    <div className='p-3'>
-                        {
-                            (this.state.ennemyTokenom != null)
-
-                                ?
-                                (<>
-                                    <EnnemyFightingCard tokenom={this.state.ennemyTokenom} tokenomId={this.props.vsId}></EnnemyFightingCard>
-                                </>)
-                                :
-                                (<>
-                                    <h1>loading</h1>
-                                </>)
-                        }
-                    </div>
-                </div>
-
-            </>
-        )
-    }
+            </div>
+            <div className='p-3'>
+                {(ennemyTokenom != null)
+                        ?
+                        (<>
+                            <AllyFightingCard tokenom={ennemyTokenom} tokenomId={props.vsId} ally={false}></AllyFightingCard>
+                        </>)
+                        :
+                        (<>
+                            <h1>loading</h1>
+                        </>)
+                }
+            </div>
+        </div>
+    </>
 }
+export default FightPage;

@@ -1,60 +1,47 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import TokenomContractCall from './utils/BlockchainCall.jsx'
 
 
 
+function AttackButton(props) {
 
-export class AttackButton extends Component {
+    const [attackData, setAttackData] = useState(null);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            attackData: null,
+    useEffect(() => {
+        const retrieveAttackData = async () => {
+            let attackData = await TokenomContractCall("getTokenomAttack", [props.tokenomId, props.attackId]);
+    
+            setAttackData(attackData);
         }
-    }
+        retrieveAttackData();
+    }, [props.tokenomId, props.attackId]);
 
-    componentDidMount = () => {
-        this.retrieveAttackData();
-    }
-
-    retrieveAttackData = async () => {
-
-        let attackData = await TokenomContractCall("getTokenomAttack", [this.props.tokenomId, this.props.attackId]);
-
-        this.setState({
-            attackData: attackData
-        })
-    }
-
-    throwAttack = async () => {
-        let tokenTxn = await TokenomContractCall("attack", [this.props.tokenomId, this.props.attackId]);
+    const throwAttack = async () => {
+        let tokenTxn = await TokenomContractCall("attack", [props.tokenomId, props.attackId]);
 
         await tokenTxn.wait();
-
         window.location.reload(false);
     }
 
+    return (
+        <>
+            {(attackData != null)
+                ?
+                <button className='attackButton' disabled={props.disabled} onClick={throwAttack}>
+                    name : {attackData.name}
+                    <br />
+                    dmg: {attackData.damage.toNumber()}
+                    <br />
+                    precision: {attackData.precision.toNumber()} %
+                </button>
+                :
+                < button className='attackButton' disabled >
+                    Not learned yet
+                </button>
+            }
+        </>
 
-
-    render() {
-        return (
-            <>
-                {(this.state.attackData != null)
-                    ?
-                    <button className='attackButton' disabled={this.props.disabled} onClick={this.throwAttack}>
-                        name : {this.state.attackData.name}
-                        <br/>
-                        dmg: {this.state.attackData.damage.toNumber()}
-                        <br/>
-                        precision: {this.state.attackData.precision.toNumber()} %
-                    </button>
-                    :
-                    < button className='attackButton' disabled >
-                        Not learned yet
-                    </button>
-                }
-            </>
-
-        )
-    }
+    )
 }
+
+export default AttackButton;

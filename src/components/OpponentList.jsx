@@ -1,81 +1,64 @@
-import React, { Component } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TokenomContractCall from './utils/BlockchainCall.jsx'
 
-import { OpponentCard } from './OpponentCard.jsx';
+import OpponentCard from './OpponentCard.jsx';
 import BattleDataContext from './BattleDataContext.jsx';
 
 
-export class OpponentList extends Component {
+function OpponentList() {
 
-    static contextType = BattleDataContext
+    const context = useContext(BattleDataContext);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            potentialsOpponentsList: [],
-            selectedOpponent: null,
-            potentialsOpponentsIds: []
-        }
-    }
+    const [potentialsOpponentsList, setPotentialsOpponentsList] = useState([])
+    const [selectedOpponent, setSelectedOpponent] = useState(null)
 
+    useEffect(() => {
+        const findPotentialsOpponents = async () => {
 
+            let supply = await TokenomContractCall("totalSupply", []);
 
-    componentDidMount = () => {
-        this.findPotentialsOpponents();
-    }
+            let potentialsOpponentsIds = [];
 
-    findPotentialsOpponents = async () => {
-
-        let supply = await TokenomContractCall("totalSupply", []);
-
-        let potentialsOpponentsIds = [];
-
-        while (potentialsOpponentsIds.length < 9 && potentialsOpponentsIds.length < supply) {
-            let value = Math.floor(Math.random() * supply + 1);
-            if (potentialsOpponentsIds.find(element => element === value) === undefined) {
-                potentialsOpponentsIds.push(value);
+            while (potentialsOpponentsIds.length < 9 && potentialsOpponentsIds.length < supply) {
+                let value = Math.floor(Math.random() * supply + 1);
+                if (potentialsOpponentsIds.find(element => element === value) === undefined) {
+                    potentialsOpponentsIds.push(value);
+                }
             }
+
+            let potentialsOpponentsStats = [];
+            for (const id of potentialsOpponentsIds) {
+                let tokenomStats = await TokenomContractCall("tokenomStats", [id]);
+                let tokenomURI = await TokenomContractCall("tokenURI", [id]);
+                tokenomStats = Object.assign({}, tokenomStats, { uri: tokenomURI })
+                const tokenomStatsWithId = Object.assign({ tokenomId: id }, tokenomStats);
+                potentialsOpponentsStats.push(tokenomStatsWithId);
+            }
+            setPotentialsOpponentsList(potentialsOpponentsStats)
         }
+        findPotentialsOpponents();
+    }, [])
 
-        let potentialsOpponentsStats = [];
-        for (const id of potentialsOpponentsIds) {
-            let tokenomStats = await TokenomContractCall("tokenomStats", [id]);
-            let tokenomURI = await TokenomContractCall("tokenURI", [id]);
-            tokenomStats = Object.assign({}, tokenomStats, { uri: tokenomURI })
-            const tokenomStatsWithId = Object.assign({ tokenomId: id }, tokenomStats);
-            potentialsOpponentsStats.push(tokenomStatsWithId);
-        }
 
-        this.setState({
-            potentialsOpponentsIds: potentialsOpponentsIds,
-            potentialsOpponentsList: potentialsOpponentsStats
-        });
 
-    }
+    const selectTokenomHandler = async (id) => {
+        const { setSelectedEnnemy } = context;
 
-    selectTokenomHandler = async (id) => {
-        const { setSelectedEnnemy } = this.context
-
-        setSelectedEnnemy(this.state.potentialsOpponentsList[id].tokenomId);
-        if (id === this.state.selectedOpponent) {
+        setSelectedEnnemy(potentialsOpponentsList[id].tokenomId);
+        if (id === selectedOpponent) {
             id = null;
             setSelectedEnnemy(null);
         }
 
-        this.setState({
-            selectedOpponent: id
-        })
+        setSelectedOpponent(id);
     }
-
-    render() {
-        return (
-            <div className='h-full grid grid-rows-3 grid-flow-col gap-4 p-5'>
-                {this.state.potentialsOpponentsList.map((opponent, i) => (
-                    <button key={opponent.tokenomId} className='card rounded' onClick={() => this.selectTokenomHandler(i)}>
-                        <OpponentCard key={i} tokenom={opponent} selected={this.state.selectedOpponent === i ? true : false}></OpponentCard>
-                    </button>
-                ))}
-            </div>
-        )
-    }
+    return <div className='h-full grid grid-rows-3 grid-flow-col gap-4 p-5'>
+            {potentialsOpponentsList.map((opponent, i) => (
+                <button key={opponent.tokenomId} className='card rounded' onClick={() => selectTokenomHandler(i)}>
+                    <OpponentCard key={i} tokenom={opponent} selected={selectedOpponent === i ? true : false}></OpponentCard>
+                </button>
+            ))}
+        </div>
+    
 }
+export default OpponentList;

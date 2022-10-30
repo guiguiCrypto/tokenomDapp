@@ -1,5 +1,5 @@
 import React from "react";
-import { MainPage } from './components/layout/MainPage';
+import MainPage from './components/layout/MainPage';
 import { BattleDataProvider } from "./components/BattleDataContext";
 import '@rainbow-me/rainbowkit/styles.css';
 import {
@@ -12,6 +12,7 @@ import {
   createClient,
   WagmiConfig,
 } from 'wagmi';
+import { BrowserRouter } from "react-router-dom";
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
@@ -46,7 +47,9 @@ function App() {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <BattleDataProvider value={battleData}>
-          <MainPage></MainPage>
+          <BrowserRouter>
+            <MainPage></MainPage>
+          </BrowserRouter>
         </BattleDataProvider>
       </RainbowKitProvider>
     </WagmiConfig >

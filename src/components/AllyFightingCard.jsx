@@ -1,71 +1,77 @@
-import React, { Component } from 'react';
-import tokenom1 from '../images/Tokenom1.png'
+import React, { useState, useEffect } from 'react';
 import { LinearProgress } from '@mui/material';
-import { Timer } from './Timer.jsx'
-import { AttackButton } from './AttackButton';
+import Timer from './Timer.jsx'
+import AttackButton from './AttackButton';
+import TokenomContractCall from './utils/BlockchainCall.jsx';
 
 
+function FightingCard(props) {
 
-export class AllyFightingCard extends Component {
+    const [url, setUrl] = useState("");
+    const [attackCooldown, setAttackCooldown] = useState(3600);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            tokenom: this.props.tokenom,
+    useEffect(() => {
+        const updateAttackCoolown = async () => {
+            const baseCooldown = await TokenomContractCall("attackCooldown", []);
+    
+            setAttackCooldown(baseCooldown);
         }
-    }
-
-    renderSwitch(param) {
-        if (param > 50) {
-            return <LinearProgress variant="determinate" color="success" sx={{ height: "5%" }} value={param} />;
+        const updateTokenomUrl = async () => {
+            const tokenomURI = await TokenomContractCall("tokenURI", [props.tokenomId])
+    
+            setUrl(tokenomURI);
         }
-        else if (param > 20) {
-            return <LinearProgress variant="determinate" color="warning" sx={{ height: "5%" }} value={param} />;
-        }
-        else return <LinearProgress variant="determinate" color="error" sx={{ height: "5%" }} value={param} />;
-    }
+        updateTokenomUrl();
+        updateAttackCoolown();
+    }, [props.tokenomId]);
 
-
-    render() {
-        return (
-            <div className="bg-green-200 h-full p-[2%] grid grid-rows-2 grid-flow-col gap-4  ">
-                <div className='grid-cols-2'>
-                    <img src={tokenom1} alt='tokenom' className="w-[40%] float-left"></img>
-                    <div >
-                        <h1 className='font-medium text-4xl '>Name :  {this.state.tokenom.name}</h1>
-                    </div>
-                    <div>
-                        <h1 className='font-medium text-4xl my-[2%]'>Level :  {this.state.tokenom.level}</h1>
-                    </div>
-                    <div className='mt-20'>
-                        <Timer lastAttack={this.state.tokenom.lastAttack}></Timer>
-                    </div>
-
+    return (
+        <div className={props.ally ? "bg-green-200 h-full p-[2%] grid grid-rows-2 grid-flow-col gap-4"  : "bg-red-200 h-full p-[2%] grid grid-rows-2 grid-flow-col gap-4"}>
+            <div className='grid-cols-2'>
+                <img src={"https://ipfs.io/" + url} style={{ transform: props.ally ? "scaleX(-1)" : "" }} alt='tokenom' className={props.ally ? "w-[40%] float-left" : "w-[40%] float-right"}></img>
+                <div >
+                    <h1 className='font-medium text-4xl'>Name :  {props.tokenom.name}</h1>
                 </div>
-
-                <div className="">
-                    <p className="text-right">{this.state.tokenom.lifePoint} / {this.state.tokenom.maxLifePoint} LP</p>
-                    {this.renderSwitch(this.state.tokenom.lifePoint / this.state.tokenom.maxLifePoint * 100)}
-
-                    <div className="grid grid-rows-2 grid-flow-col gap-2 pt-[10%] h-[90%]" >
-                        <div className="attackColumn">
-
-                            <AttackButton tokenomId={this.props.tokenomId} attackId={0}></AttackButton>
-                            <AttackButton tokenomId={this.props.tokenomId} attackId={1}></AttackButton>
-                        </div>
-                        <div className="attackColumn">
-                            <AttackButton tokenomId={this.props.tokenomId} attackId={2}></AttackButton>
-                            <AttackButton tokenomId={this.props.tokenomId} attackId={3}></AttackButton>
-                        </div>
-
-                    </div>
-
-
+                <div>
+                    <h1 className='font-medium text-4xl my-[2%]'>Level :  {props.tokenom.level}</h1>
                 </div>
-
+                {
+                    props.ally ?
+                        <div className='mt-20'>
+                            <Timer lastAttack={props.tokenom.lastAttack} baseCooldown={attackCooldown}></Timer>
+                        </div>
+                        :
+                        <></>
+                }
 
             </div>
-        )
-    }
 
+            <div className="">
+                <p className="text-right">{props.tokenom.lifePoint} / {props.tokenom.maxLifePoint} LP</p>
+                <RenderSwitch percentageHp={(props.tokenom.lifePoint / props.tokenom.maxLifePoint * 100)} />
+
+                <div className="grid grid-rows-2 grid-flow-col gap-2 pt-[10%] h-[90%]" >
+                    <div className="attackColumn">
+                        <AttackButton tokenomId={props.tokenomId} attackId={0} disabled={!props.ally}></AttackButton>
+                        <AttackButton tokenomId={props.tokenomId} attackId={1} disabled={!props.ally}></AttackButton>
+                    </div>
+                    <div className="attackColumn">
+                        <AttackButton tokenomId={props.tokenomId} attackId={2} disabled={!props.ally}></AttackButton>
+                        <AttackButton tokenomId={props.tokenomId} attackId={3} disabled={!props.ally}></AttackButton>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default FightingCard;
+
+function RenderSwitch(props) {
+    if (props.percentageHp > 50) {
+        return <LinearProgress variant="determinate" color="success" sx={{ height: "5%" }} value={props.percentageHp} />;
+    }
+    else if (props.percentageHp > 20) {
+        return <LinearProgress variant="determinate" color="warning" sx={{ height: "5%" }} value={props.percentageHp} />;
+    }
+    else return <LinearProgress variant="determinate" color="error" sx={{ height: "5%" }} value={props.percentageHp} />;
 }

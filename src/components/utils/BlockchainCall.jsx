@@ -25,7 +25,7 @@ const TokenomContractCall = async function (name, args = null){
         }
 
     } catch (err) {
-        console.log(err.message)
+        //console.error(err.message)
     }
 }
 
